@@ -1,55 +1,102 @@
-import path from 'node:path';
+// import path from 'node:path';
 
-// Task 1: Break a Path into Its Components
-let filename = "notes.txt";
-let fullpath = path.join(process.cwd(), 'data', filename);
-console.log("\nTask 1: Break a Path into Its Components")
-console.log(path.parse(fullpath));
+// // Task 1: Break a Path into Its Components
+// let filename = "notes.txt";
+// let fullpath = path.join(process.cwd(), 'data', filename);
+// console.log("\nTask 1: Break a Path into Its Components")
+// console.log(path.parse(fullpath));
 
 
-// Task 2: Create a Path from Separate Details
+// // Task 2: Create a Path from Separate Details
 
-let path1 = path.format({
-    dir: "backups",
-    name: "employee-data",
-    ext: ".json"
+// let path1 = path.format({
+//     dir: "backups",
+//     name: "employee-data",
+//     ext: ".json"
+// })
+// console.log("\nTask 2: Create a Path from Separate Details")
+// console.log(path1);
+
+
+// // task 3
+
+// let path2 = path.format({
+//     dir: "data",
+//     name: "users",
+//     base:"users.json"
+// })
+// console.log("\nTask 3: Generate an Absolute Path")
+// console.log(path.resolve(path2));
+
+// // task 4
+// let path3 = path.format({
+//     dir:"project-folder/documents",
+//     base:"reports"
+// })
+
+// let path4 = path.format({
+//     dir:"project-folder/documents",
+//     base:"bakcups"
+// })
+// console.log("\nTask 4: Find the Relative Path Between Two Folders")
+// console.log(path.relative(path3, path4));
+
+
+// // task 5
+
+// let path5 = path.format({
+//     dir:"documents",
+//     base:"notes.txt"
+// })
+
+// let abspath5 = path.resolve(path5)
+// console.log("\nTask 5: Check Whether Paths Are Absolute")
+// console.log(path5 + ": " + path.isAbsolute(path5))
+// console.log(abspath5 + ": " + path.isAbsolute(abspath5));
+
+
+// event emiitter
+
+// import Emitter from 'node:events';
+
+// const orderemitter = new Emitter()
+
+// orderemitter.on('orderplaced', (orders) =>{
+//     console.log(`Order ID is #${orders.id} and order amount is ${orders.amount}`)
+// })
+
+// orderemitter.emit('orderplaced', {
+//     id : 101,
+//     amount: 250
+// })
+
+import Emitter from 'node:events';
+const order = {
+    id: 101,
+    customerName: 'Rahul',
+    productName: 'Wireless Mouse',
+    quantity: 2,
+    amount: 1200
+};
+
+const orderEvent = new Emitter()
+
+orderEvent.on('orderPlaced', (orders)=>{
+    console.log(`
+        Order #${orders.id} placed successfully.
+        Product: ${orders.productName} 
+        Quantity: ${orders.quantity} 
+        Total Amount: ₹${orders.amount}
+        `)
 })
-console.log("\nTask 2: Create a Path from Separate Details")
-console.log(path1);
 
-
-// task 3
-
-let path2 = path.format({
-    dir: "data",
-    name: "users",
-    base:"users.json"
-})
-console.log("\nTask 3: Generate an Absolute Path")
-console.log(path.resolve(path2));
-
-// task 4
-let path3 = path.format({
-    dir:"project-folder/documents",
-    base:"reports"
+orderEvent.addListener('orderPlaced', (orders)=>{
+    console.log(`Order confirmation sent to ${orders.customerName}\n`)
 })
 
-let path4 = path.format({
-    dir:"project-folder/documents",
-    base:"bakcups"
-})
-console.log("\nTask 4: Find the Relative Path Between Two Folders")
-console.log(path.relative(path3, path4));
-
-
-// task 5
-
-let path5 = path.format({
-    dir:"documents",
-    base:"notes.txt"
+orderEvent.addListener('orderPlaced', (orders)=>{
+    console.log(`Inventory updated for ${orders.productName}. Quantity reduced by ${orders.quantity}\n`)
+    
 })
 
-let abspath5 = path.resolve(path5)
-console.log("\nTask 5: Check Whether Paths Are Absolute")
-console.log(path5 + ": " + path.isAbsolute(path5))
-console.log(abspath5 + ": " + path.isAbsolute(abspath5));
+orderEvent.emit('orderPlaced', order);
