@@ -1,0 +1,14 @@
+{
+  "name": "mod_2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "textaccess.js",
+  "scripts": {
+    "start": "node textaccess.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
