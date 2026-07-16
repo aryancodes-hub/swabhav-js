@@ -1,0 +1,7 @@
+ const students = [
+  { id: 101, name: "Alice Johnson", age: 20, grade: "A", subjects: ["Math", "Physics"] },
+  { id: 102, name: "Bob Smith", age: 22, grade: "B", subjects: ["Chemistry", "Biology"] },
+  { id: 103, name: "Charlie Brown", age: 21, grade: "A", subjects: ["Math", "Computer Science"] }
+];
+
+export default students;
