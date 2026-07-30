@@ -1,0 +1,7 @@
+student profile and student two schema
+
+student profile will have primary key of student as foreign key.
+
+student is main, student has to be there for student profile to be created. but vice versa is not true.
+
+student profile: profileid, address, phone no, studentId(foreign key)

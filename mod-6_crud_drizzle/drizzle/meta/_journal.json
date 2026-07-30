@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1784614772337,
+      "tag": "0000_medical_tarot",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1784795880614,
+      "tag": "0001_adorable_prodigy",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784796604101,
+      "tag": "0002_fuzzy_maverick",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1784796941999,
+      "tag": "0003_nasty_tarantula",
+      "breakpoints": true
+    }
+  ]
+}

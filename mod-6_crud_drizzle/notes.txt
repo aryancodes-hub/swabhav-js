@@ -1,0 +1,58 @@
+npm init -y
+npm i express drizzle-orm pg dotenv
+npm i drizzle-kit nodemon
+
+scripts in package.json
+"scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate":"drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  create postgresql db named studentDB
+  connect with it using test.js
+
+  import "dotenv/config";
+import pg from "pg";
+ 
+const { Client } = pg;
+ 
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    connectionTimeoutMillis: 5000
+});
+ 
+try {
+    console.log("Connecting to PostgreSQL...");
+ 
+    await client.connect();
+ 
+    const result = await client.query(`
+        SELECT
+            current_database() AS database_name,
+            current_user AS user_name,
+            NOW() AS connected_at
+    `);
+ 
+    console.log("Connection successful");
+    console.log(result.rows[0]);
+} catch (error) {
+    console.error("Connection failed");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+} finally {
+    await client.end();
+}
+ 
+
+ then create all the folder structure as shown in project
+ 
+
+ pure query repo layer (such as get, put and all)
+
+ query result needing to be filtered or transformed that is in service layer
+
+ and both of this are used by controller layer to coordinate the application
