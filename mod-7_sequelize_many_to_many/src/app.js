@@ -20,7 +20,7 @@ app.get("/health", (req,res) => {
 app.use("/api/students", router)
 app.use("/api/depts", deptRouter)
 app.use("/api/courses", courseRouter)
-app.use("/api/enrollment", enrollRouter)
+app.use("/api/enrollments", enrollRouter)
 
 
 app.use((req, res) => {

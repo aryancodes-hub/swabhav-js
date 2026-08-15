@@ -50,7 +50,8 @@ const Courses = sequelize.define(
     {
         tableName:"courses",
         timestamps: true,
-        underscored: true
+        underscored: true,
+        paranoid: true
     }
 )
 

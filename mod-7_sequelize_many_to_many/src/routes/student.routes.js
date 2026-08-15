@@ -7,15 +7,17 @@ import {
     updateStudentById,
     updateStudentProfile,
     deleteStudent,
-    deleteStudentProfile
+    deleteStudentProfile,
+    searchAllStudents
 } from "../controllers/student.controller.js";
 
 
 const router = Router();
 
 router.route("/")
-                .get(getAllStudents)
-                .post(createStudent);
+                // .get(getAllStudents)
+                .post(createStudent)
+                .get(searchAllStudents);
 
 router.route("/:id")
                     .get(getStudentById)
