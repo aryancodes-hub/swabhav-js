@@ -1,0 +1,25 @@
+{
+  "name": "url-shortener-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Root workspace for the URL shortener project",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install --prefix url-shortener-data-model && npm install --prefix url-shortener-api",
+    "dev": "npm run dev --prefix url-shortener-api",
+    "start": "npm run dev --prefix url-shortener-api",
+    "db:migrate": "npm run db:migrate --prefix url-shortener-data-model",
+    "db:migrate:status": "npm run db:migrate:status --prefix url-shortener-data-model",
+    "db:migrate:undo": "npm run db:migrate:undo --prefix url-shortener-data-model",
+    "db:migrate:undo:all": "npm run db:migrate:undo:all --prefix url-shortener-data-model",
+    "db:seed": "npm run db:seed --prefix url-shortener-data-model",
+    "db:seed:undo": "npm run db:seed:undo --prefix url-shortener-data-model"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24"
+  }
+}
