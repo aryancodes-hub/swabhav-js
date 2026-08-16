@@ -35,6 +35,15 @@ class PaymentController {
             next(error);
         }
     }
+
+    async handleWebhook(req, res, next) {
+        try {
+            const result = await this.paymentService.processWebhookEvent(req.body);
+            return res.status(200).json({ success: true, data: result });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = PaymentController;

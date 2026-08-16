@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { op } = require("sequelize");
+const { Op } = require("sequelize");
 const { User, PasswordResetToken } = require("@url/url-shortener-data-model");
 const {
     ConflictError,
@@ -9,6 +9,7 @@ const {
     ForbiddenError,
     BadRequestError
 } = require("../../lib/error.js");
+const MailerService = require("../../utils/mailer");
 
 class AuthService {
     async register({ name, email, password }) {
@@ -77,6 +78,8 @@ class AuthService {
                 expiresAt
             });
             console.log(`\n[DEBUG RESET LINK TOKEN] For ${email}: ${rawToken}\n`);
+
+            await MailerService.sendPasswordResetEmail(user.email, rawToken);
         }
         return {
             message:
@@ -91,7 +94,7 @@ class AuthService {
             where: {
                 tokenHash,
                 usedAt: null,
-                expiresAt: { [op.gt]: new Date() }
+                expiresAt: { [Op.gt]: new Date() }
             }
         });
         if (!resetTokenRecord) {

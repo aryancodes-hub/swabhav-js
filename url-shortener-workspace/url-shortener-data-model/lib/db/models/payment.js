@@ -26,7 +26,16 @@ class Payment extends Model {
                 },
                 slotsPurchased: {
                     type: DataTypes.INTEGER,
-                    allowNull: false
+                    allowNull: true,
+                    defaultValue: 0
+                },
+                providerOrderId:{
+                    type: DataTypes.STRING,
+                    allowNull: true
+                },
+                transactionId:{
+                    type: DataTypes.STRING,
+                    allowNull: true
                 },
                 status: {
                     type: DataTypes.ENUM("PENDING", "SUCCESS", "FAILED"),

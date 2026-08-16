@@ -10,8 +10,9 @@ module.exports = (error, req, res, next) => {
         status = 422;
         code = "UNPROCESSABLE_ENTITY";
         message = "Validation failed.";
-        details = error.errors.map((item) => ({
-            field: item.path.join("."),
+        const issues = error.issues || error.errors || [];
+        details = issues.map((item) => ({
+            field: Array.isArray(item.path) ? item.path.join(".") : item.path,
             message: item.message
         }));
     } else if (error.name === "SequelizeValidationError") {

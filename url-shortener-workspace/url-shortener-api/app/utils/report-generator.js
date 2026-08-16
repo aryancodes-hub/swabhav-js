@@ -10,9 +10,9 @@ class ReportGenerator {
     userInfo = {},
     headers = [],
     rows = [],
-    primaryColor = "#2563EB" // Sleek modern blue
+    primaryColor = "#2563EB"
   }) {
-    const doc = new PDFDocument({ margin: 20, size: "A4" });
+    const doc = new PDFDocument({ margin: 30, size: "A4" });
 
     // --- 1. BRAND HEADER BANNER ---
     doc
@@ -35,8 +35,6 @@ class ReportGenerator {
       doc.text(`Filter Range: ${userInfo.dateRange}`, 30, 105);
     }
 
-    doc.moveDown(2);
-
     let startY = userInfo.dateRange ? 130 : 115;
 
     // --- 3. EMPTY STATE CHECK ---
@@ -54,39 +52,40 @@ class ReportGenerator {
     const pageMargin = 30;
     const usableWidth = doc.page.width - pageMargin * 2;
     
-    // Calculate column widths dynamically based on headers configuration
     const colWidths = headers.map((h) => (h.widthPercent / 100) * usableWidth);
 
-    // Draw Table Header Bar
+    // Header Bar - Increased height from 22pt to 26pt to prevent text clipping
+    const headerHeight = 26;
     doc
-      .rect(pageMargin, tableTop, usableWidth, 22)
+      .rect(pageMargin, tableTop, usableWidth, headerHeight)
       .fill("#F3F4F6");
 
     let currentX = pageMargin;
-    doc.fillColor("#111827").fontSize(9).font("Helvetica-Bold");
+    doc.fillColor("#111827").fontSize(8.5).font("Helvetica-Bold");
 
     headers.forEach((header, i) => {
-      doc.text(header.label, currentX + 5, tableTop + 6, {
-        width: colWidths[i] - 10,
-        align: header.align || "left"
+      doc.text(header.label, currentX + 3, tableTop + 8, {
+        width: colWidths[i] - 6,
+        align: header.align || "left",
+        lineBreak: false // Prevents label wrapping onto a 2nd line
       });
       currentX += colWidths[i];
     });
 
     // Draw Table Rows
-    let currentY = tableTop + 22;
+    let currentY = tableTop + headerHeight;
+    const rowHeight = 22; // Slightly higher row height for cleaner padding
     doc.font("Helvetica").fontSize(8);
 
     rows.forEach((row, rowIndex) => {
-      // Check if we need a new page for overflowing rows
-      if (currentY + 25 > doc.page.height - 50) {
+      if (currentY + rowHeight > doc.page.height - 50) {
         doc.addPage();
-        currentY = 40; // Reset Y for new page
+        currentY = 40;
       }
 
-      // Alternating Row Background Color
+      // Alternating Zebra Row Background
       if (rowIndex % 2 === 0) {
-        doc.rect(pageMargin, currentY, usableWidth, 20).fill("#F9FAFB");
+        doc.rect(pageMargin, currentY, usableWidth, rowHeight).fill("#F9FAFB");
       }
 
       let rowX = pageMargin;
@@ -94,8 +93,8 @@ class ReportGenerator {
 
       headers.forEach((header, colIndex) => {
         const cellValue = String(row[header.key] ?? "-");
-        doc.text(cellValue, rowX + 5, currentY + 6, {
-          width: colWidths[colIndex] - 10,
+        doc.text(cellValue, rowX + 3, currentY + 7, {
+          width: colWidths[colIndex] - 6,
           align: header.align || "left",
           ellipsis: true
         });
@@ -104,13 +103,13 @@ class ReportGenerator {
 
       // Bottom Row Border Line
       doc
-        .moveTo(pageMargin, currentY + 20)
-        .lineTo(pageMargin + usableWidth, currentY + 20)
+        .moveTo(pageMargin, currentY + rowHeight)
+        .lineTo(pageMargin + usableWidth, currentY + rowHeight)
         .strokeColor("#E5E7EB")
         .lineWidth(0.5)
         .stroke();
 
-      currentY += 20;
+      currentY += rowHeight;
     });
 
     // --- 5. DYNAMIC FOOTER & PAGE NUMBERS ---
@@ -132,9 +131,6 @@ class ReportGenerator {
     return doc;
   }
 
-  /**
-   * Reusable CSV String Builder
-   */
   static buildCsvString({ fields, data }) {
     const json2csvParser = new Parser({ fields });
     return json2csvParser.parse(data);

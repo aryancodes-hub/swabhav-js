@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const Razorpay = require("razorpay");
 
 class PaymentGateway {
   /**
@@ -14,20 +15,39 @@ class PaymentGateway {
   /**
    * RAZORPAY MODE (Future): Step 1 - Creates Razorpay Order
    */
-  static async createRazorpayOrder(razorpayInstance, { amount, currency = "INR", receipt }) {
+  static async createRazorpayOrder({ amount, currency = "INR", receipt }={}) {
+    const key_id = process.env.RAZORPAY_KEY_ID;
+    const key_secret = process.env.RAZORPAY_KEY_SECRET;
+    if(!key_id || !key_secret){
+      throw new Error("RazorPay credentials are missing.")
+    }
+
+    const razorpay = new Razorpay({key_id, key_secret});
+
     const options = {
       amount: Math.round(amount * 100), 
       currency,
-      receipt
+      receipt: String(receipt),
+      payment_capture: 1
     };
     // Razorpay SDK method
-    return await razorpayInstance.orders.create(options);
+    const order = await razorpay.orders.create(options);
+    return {
+      orderId: order.id,
+      amount: order.amount / 100,
+      currency: order.currency,
+      keyId: key_id
+    };
   }
 
   /**
-   * RAZORPAY MODE (Future): Step 2 - Cryptographic Signature Verification
+   * RAZORPAY MODE : Step 2 - Cryptographic Signature Verification
    */
-  static verifyRazorpaySignature({ orderId, paymentId, signature }, secret) {
+  static verifyRazorpaySignature({ orderId, paymentId, signature }) {
+    const secret = process.env.RAZORPAY_KEY_SECRET;
+    if(!secret){
+      throw new Error("RAZORPAY_KEY_SECRET is missing.")
+    }
     const generatedSignature = crypto
       .createHmac("sha256", secret)
       .update(`${orderId}|${paymentId}`)

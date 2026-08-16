@@ -38,12 +38,12 @@ class ReportService {
 
     // Table Column Schema
     const headers = [
-      { label: "SHORT CODE", key: "shortCode", widthPercent: 18 },
-      { label: "ORIGINAL URL", key: "originalUrl", widthPercent: 37 },
+      { label: "SHORT CODE", key: "shortCode", widthPercent: 16 },
+      { label: "ORIGINAL URL", key: "originalUrl", widthPercent: 32 },
       { label: "STATUS", key: "status", widthPercent: 12 },
-      { label: "TOTAL VISITS", key: "totalVisits", widthPercent: 11, align: "center" },
-      { label: "REMAINING", key: "remainingVisits", widthPercent: 11, align: "center" },
-      { label: "CREATED", key: "createdAt", widthPercent: 11, align: "center" }
+      { label: "TOTAL VISITS", key: "totalVisits", widthPercent: 13, align: "center" },
+      { label: "REMAINING", key: "remainingVisits", widthPercent: 14, align: "center" },
+      { label: "CREATED", key: "createdAt", widthPercent: 13, align: "center" }
     ];
 
     let rangeString = null;

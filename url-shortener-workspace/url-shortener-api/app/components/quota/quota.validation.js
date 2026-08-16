@@ -10,4 +10,13 @@ const purchaseQuotaSchema = z.object({
     })
 });
 
-module.exports = { purchaseQuotaSchema };
+const verifyPaymentSchema = z.object({
+    body: z.object({
+        paymentId: z.string().uuid("paymentId must be a valid UUID."),
+        razorpayOrderId: z.string().min(1, "razorpayOrderId is required."),
+        razorpayPaymentId: z.string().min(1, "razorpayPaymentId is required."),
+        razorpaySignature: z.string().min(1, "razorpaySignature is required.")
+    })
+});
+
+module.exports = { purchaseQuotaSchema, verifyPaymentSchema };

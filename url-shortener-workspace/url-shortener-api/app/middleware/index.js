@@ -30,6 +30,17 @@ const {
 
 const { reportQuerySchema } = require("./../components/report/report.validation");
 
+const {
+    adminListUsersQuerySchema,
+    adminUserParamsSchema,
+    adminListUrlsQuerySchema,
+    adminUrlParamsSchema,
+    adminListPaymentsQuerySchema,
+    adminPaymentParamsSchema,
+    updateConfigSchema
+} = require("../components/admin/admin.validation");
+const verifyRazorpayWebhook = require("./verify-razorpay-webhook");
+
 module.exports = {
     validateJsonContentType,
     validatePaginationQuery,
@@ -57,5 +68,15 @@ module.exports = {
     validatePaymentListQuery: validateRequest(listPaymentQuerySchema),
     validatePaymentParams: validateRequest(paymentParamsSchema),
     // Reports
-    validateReportQuery: validateRequest(reportQuerySchema)
+    validateReportQuery: validateRequest(reportQuerySchema),
+    // Admin
+    validateAdminListUsersQuery: validateRequest(adminListUsersQuerySchema),
+    validateAdminUserParams: validateRequest(adminUserParamsSchema),
+    validateAdminListUrlsQuery: validateRequest(adminListUrlsQuerySchema),
+    validateAdminUrlParams: validateRequest(adminUrlParamsSchema),
+    validateAdminListPaymentsQuery: validateRequest(adminListPaymentsQuerySchema),
+    validateAdminPaymentParams: validateRequest(adminPaymentParamsSchema),
+    validateAdminUpdateConfig: validateRequest(updateConfigSchema),
+    // webhook 
+    verifyRazorpayWebhook
 };

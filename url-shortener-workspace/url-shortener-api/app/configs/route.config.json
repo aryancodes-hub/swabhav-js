@@ -1,156 +1,314 @@
 [
-  {
-    "method": "post",
-    "route": "/api/v1/auth/register",
-    "controller": "auth",
-    "action": "register",
-    "middlewareNameList": ["validateJsonContentType", "validateAuthRegister"]
-  },
-  {
-    "method": "post",
-    "route": "/api/v1/auth/login",
-    "controller": "auth",
-    "action": "login",
-    "middlewareNameList": ["validateJsonContentType", "validateAuthLogin"]
-  },
-  {
-    "method": "post",
-    "route": "/api/v1/auth/logout",
-    "controller": "auth",
-    "action": "logout",
-    "middlewareNameList": ["authenticate"]
-  },
-  {
-    "method": "post",
-    "route": "/api/v1/auth/forgot-password",
-    "controller": "auth",
-    "action": "forgotPassword",
-    "middlewareNameList": ["validateJsonContentType", "validateAuthForgotPassword"]
-  },
-  {
-    "method": "post",
-    "route": "/api/v1/auth/reset-password",
-    "controller": "auth",
-    "action": "resetPassword",
-    "middlewareNameList": ["validateJsonContentType", "validateAuthResetPassword"]
-  },
-  {
-    "method": "get",
-    "route": "/api/v1/users/me",
-    "controller": "user",
-    "action": "getProfile",
-    "middlewareNameList": ["authenticate"]
-  },
-  {
-    "method": "patch",
-    "route": "/api/v1/users/me",
-    "controller": "user",
-    "action": "updateProfile",
-    "middlewareNameList": ["validateJsonContentType", "authenticate", "validateUserUpdateProfile"]
-  },
-  {
-    "method": "patch",
-    "route": "/api/v1/users/me/password",
-    "controller": "user",
-    "action": "changePassword",
-    "middlewareNameList": ["validateJsonContentType", "authenticate", "validateUserChangePassword"]
-  },
-  {
-    "method": "put",
-    "route": "/api/v1/users/me/photo",
-    "controller": "user",
-    "action": "updateAvatar",
-    "middlewareNameList": ["authenticate", "uploadAvatar"]
-  },
-  {
-    "method": "delete",
-    "route": "/api/v1/users/me/photo",
-    "controller": "user",
-    "action": "deleteAvatar",
-    "middlewareNameList": ["authenticate"]
-  },
-  {
-    "method": "get",
-    "route": "/:shortCode",
-    "controller": "url",
-    "action": "redirect",
-    "middlewareNameList": ["validateUrlRedirect"]
-  },
-  {
-    "method": "post",
-    "route": "/api/v1/urls",
-    "controller": "url",
-    "action": "createUrl",
-    "middlewareNameList": ["validateJsonContentType", "authenticate", "authorizeUser", "validateUrlCreate"]
-  },
-  {
-    "method": "get",
-    "route": "/api/v1/urls",
-    "controller": "url",
-    "action": "listUrls",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validatePaginationQuery", "validateUrlListQuery"]
-  },
-  {
-    "method": "get",
-    "route": "/api/v1/urls/:urlId",
-    "controller": "url",
-    "action": "getUrlById",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validateUrlParams"]
-  },
-  {
-    "method": "patch",
-    "route": "/api/v1/urls/:urlId",
-    "controller": "url",
-    "action": "updateUrl",
-    "middlewareNameList": ["validateJsonContentType", "authenticate", "authorizeUser", "validateUrlUpdate"]
-  },
-  {
-    "method": "delete",
-    "route": "/api/v1/urls/:urlId",
-    "controller": "url",
-    "action": "deleteUrl",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validateUrlParams"]
-  },
-  {
-    "method": "post",
-    "route": "/api/v1/urls/:urlId/renewals",
-    "controller": "url",
-    "action": "renewUrl",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validateUrlParams"]
-  },
-  {
-    "method": "post",
-    "route": "/api/v1/quota/purchases",
-    "controller": "quota",
-    "action": "purchaseQuota",
-    "middlewareNameList": ["validateJsonContentType", "authenticate", "authorizeUser", "validateQuotaPurchase"]
-  },
-  {
-    "method": "get",
-    "route": "/api/v1/payments",
-    "controller": "payment",
-    "action": "listPayments",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validatePaginationQuery", "validatePaymentListQuery"]
-  },
-  {
-    "method": "get",
-    "route": "/api/v1/payments/:paymentId",
-    "controller": "payment",
-    "action": "getPaymentById",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validatePaymentParams"]
-  },
-  {
-    "method": "get",
-    "route": "/api/v1/reports/url-history/pdf",
-    "controller": "report",
-    "action": "generatePdf",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validateReportQuery"]
-  },
-  {
-    "method": "get",
-    "route": "/api/v1/reports/url-history/csv",
-    "controller": "report",
-    "action": "generateCsv",
-    "middlewareNameList": ["authenticate", "authorizeUser", "validateReportQuery"]
-  }
+    {
+        "method": "post",
+        "route": "/api/v1/auth/register",
+        "controller": "auth",
+        "action": "register",
+        "middlewareNameList": ["validateJsonContentType", "validateAuthRegister"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/auth/login",
+        "controller": "auth",
+        "action": "login",
+        "middlewareNameList": ["validateJsonContentType", "validateAuthLogin"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/auth/logout",
+        "controller": "auth",
+        "action": "logout",
+        "middlewareNameList": ["authenticate"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/auth/forgot-password",
+        "controller": "auth",
+        "action": "forgotPassword",
+        "middlewareNameList": ["validateJsonContentType", "validateAuthForgotPassword"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/auth/reset-password",
+        "controller": "auth",
+        "action": "resetPassword",
+        "middlewareNameList": ["validateJsonContentType", "validateAuthResetPassword"]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/users/me",
+        "controller": "user",
+        "action": "getProfile",
+        "middlewareNameList": ["authenticate"]
+    },
+    {
+        "method": "patch",
+        "route": "/api/v1/users/me",
+        "controller": "user",
+        "action": "updateProfile",
+        "middlewareNameList": [
+            "validateJsonContentType",
+            "authenticate",
+            "validateUserUpdateProfile"
+        ]
+    },
+    {
+        "method": "patch",
+        "route": "/api/v1/users/me/password",
+        "controller": "user",
+        "action": "changePassword",
+        "middlewareNameList": [
+            "validateJsonContentType",
+            "authenticate",
+            "validateUserChangePassword"
+        ]
+    },
+    {
+        "method": "put",
+        "route": "/api/v1/users/me/photo",
+        "controller": "user",
+        "action": "updateAvatar",
+        "middlewareNameList": ["authenticate", "uploadAvatar"]
+    },
+    {
+        "method": "delete",
+        "route": "/api/v1/users/me/photo",
+        "controller": "user",
+        "action": "deleteAvatar",
+        "middlewareNameList": ["authenticate"]
+    },
+    {
+        "method": "get",
+        "route": "/:shortCode",
+        "controller": "url",
+        "action": "redirect",
+        "middlewareNameList": ["validateUrlRedirect"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/urls",
+        "controller": "url",
+        "action": "createUrl",
+        "middlewareNameList": [
+            "validateJsonContentType",
+            "authenticate",
+            "authorizeUser",
+            "validateUrlCreate"
+        ]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/urls",
+        "controller": "url",
+        "action": "listUrls",
+        "middlewareNameList": [
+            "authenticate",
+            "authorizeUser",
+            "validatePaginationQuery",
+            "validateUrlListQuery"
+        ]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/urls/:urlId",
+        "controller": "url",
+        "action": "getUrlById",
+        "middlewareNameList": ["authenticate", "authorizeUser", "validateUrlParams"]
+    },
+    {
+        "method": "patch",
+        "route": "/api/v1/urls/:urlId",
+        "controller": "url",
+        "action": "updateUrl",
+        "middlewareNameList": [
+            "validateJsonContentType",
+            "authenticate",
+            "authorizeUser",
+            "validateUrlUpdate"
+        ]
+    },
+    {
+        "method": "delete",
+        "route": "/api/v1/urls/:urlId",
+        "controller": "url",
+        "action": "deleteUrl",
+        "middlewareNameList": ["authenticate", "authorizeUser", "validateUrlParams"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/urls/:urlId/renewals",
+        "controller": "url",
+        "action": "renewUrl",
+        "middlewareNameList": ["authenticate", "authorizeUser", "validateUrlParams"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/quota/purchases",
+        "controller": "quota",
+        "action": "purchaseQuota",
+        "middlewareNameList": [
+            "validateJsonContentType",
+            "authenticate",
+            "authorizeUser",
+            "validateQuotaPurchase"
+        ]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/payments",
+        "controller": "payment",
+        "action": "listPayments",
+        "middlewareNameList": [
+            "authenticate",
+            "authorizeUser",
+            "validatePaginationQuery",
+            "validatePaymentListQuery"
+        ]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/payments/:paymentId",
+        "controller": "payment",
+        "action": "getPaymentById",
+        "middlewareNameList": ["authenticate", "authorizeUser", "validatePaymentParams"]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/reports/url-history/pdf",
+        "controller": "report",
+        "action": "generatePdf",
+        "middlewareNameList": ["authenticate", "authorizeUser", "validateReportQuery"]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/reports/url-history/csv",
+        "controller": "report",
+        "action": "generateCsv",
+        "middlewareNameList": ["authenticate", "authorizeUser", "validateReportQuery"]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/admin/users",
+        "controller": "admin",
+        "action": "listUsers",
+        "middlewareNameList": [
+            "authenticate",
+            "authorizeAdmin",
+            "validatePaginationQuery",
+            "validateAdminListUsersQuery"
+        ]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/admin/users/:userId",
+        "controller": "admin",
+        "action": "getUserDetails",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUserParams"]
+    },
+    {
+        "method": "patch",
+        "route": "/api/v1/admin/users/:userId/block",
+        "controller": "admin",
+        "action": "blockUser",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUserParams"]
+    },
+    {
+        "method": "patch",
+        "route": "/api/v1/admin/users/:userId/unblock",
+        "controller": "admin",
+        "action": "unblockUser",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUserParams"]
+    },
+    {
+        "method": "delete",
+        "route": "/api/v1/admin/users/:userId",
+        "controller": "admin",
+        "action": "deleteUser",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUserParams"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/admin/users/:userId/restore",
+        "controller": "admin",
+        "action": "restoreUser",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUserParams"]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/admin/urls",
+        "controller": "admin",
+        "action": "listUrls",
+        "middlewareNameList": [
+            "authenticate",
+            "authorizeAdmin",
+            "validatePaginationQuery",
+            "validateAdminListUrlsQuery"
+        ]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/admin/urls/:urlId",
+        "controller": "admin",
+        "action": "getUrlDetails",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUrlParams"]
+    },
+    {
+        "method": "delete",
+        "route": "/api/v1/admin/urls/:urlId",
+        "controller": "admin",
+        "action": "deleteUrl",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUrlParams"]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/admin/urls/:urlId/restore",
+        "controller": "admin",
+        "action": "restoreUrl",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminUrlParams"]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/admin/payments",
+        "controller": "admin",
+        "action": "listPayments",
+        "middlewareNameList": [
+            "authenticate",
+            "authorizeAdmin",
+            "validatePaginationQuery",
+            "validateAdminListPaymentsQuery"
+        ]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/admin/payments/:paymentId",
+        "controller": "admin",
+        "action": "getPaymentDetails",
+        "middlewareNameList": ["authenticate", "authorizeAdmin", "validateAdminPaymentParams"]
+    },
+    {
+        "method": "get",
+        "route": "/api/v1/admin/config",
+        "controller": "admin",
+        "action": "getSystemConfigs",
+        "middlewareNameList": ["authenticate", "authorizeAdmin"]
+    },
+    {
+        "method": "patch",
+        "route": "/api/v1/admin/config/:key",
+        "controller": "admin",
+        "action": "updateSystemConfig",
+        "middlewareNameList": [
+            "validateJsonContentType",
+            "authenticate",
+            "authorizeAdmin",
+            "validateAdminUpdateConfig"
+        ]
+    },
+    {
+        "method": "post",
+        "route": "/api/v1/payments/webhook",
+        "controller": "payment",
+        "action": "handleWebhook",
+        "middlewareNameList": ["verifyRazorpayWebhook"]
+    }
 ]

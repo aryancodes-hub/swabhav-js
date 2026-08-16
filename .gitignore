@@ -4,3 +4,6 @@ coworker/
 .env.example
 .prettierignore
 .prettierrc.json
+testing-users-details.txt
+calculate-hmac.js
+checkout-test.html
